@@ -14,7 +14,7 @@ from subprocess import call
 
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('time_stamp', help='such as 20170901')
+    parser.add_argument('time_stamp', help='such as 20170901; you can only choose timestamps that are listed at https://dumps.wikimedia.org/enwiki/')
     parser.add_argument('out_dir', help='output directory')
     parser.add_argument('job', help='all_titles/pages_articles/pages_articles_multistream/pages/categorylinks/category/all', action='append')
     args = parser.parse_args()
