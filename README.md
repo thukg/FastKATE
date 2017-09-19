@@ -17,7 +17,7 @@ Since our model utilizes Wikipedia dumps, thus we need to download these data fi
 
 1. Run `cd <PARENT>` to enter into the parent directory of FastKATE.
 
-2. Run `python3 -m FastKATE.src.wiki_downloader 20170901 <PARENT>/wikidata/ all` will help you download all possibly needed data of Wikipedia of timestamp 20170901 into the directory `<PARENT>/wikidata/`. For quick help, run `python3 -m FastKATE.src.wiki_downloader -h`.
+2. Run `python3 -m FastKATE.src.wiki_downloader 20170901 <PARENT>/wikidata/ all` will help you download all possibly needed data of Wikipedia of timestamp `20170901` into the directory `<PARENT>/wikidata/`. For quick help, run `python3 -m FastKATE.src.wiki_downloader -h`.
 
 3. Decompress all downloaded Wikipedia dumps to the `<PARENT>/wikidata/` with the same name (without suffixes such as `.gz` and `.bz2`).
 
