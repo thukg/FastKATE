@@ -218,20 +218,22 @@ def get_subcats(area, taxonomy):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--taxonomy_infile', default='./wikidata/taxonomy_lemmatized.pkl')
-    parser.add_argument('--vector_model_infile', default='./wikidata/wiki_embeddings.model')
-    parser.add_argument('--msfos_infile', default='', help='not used for the moment')
-    parser.add_argument('--acm_ccs_infile', default='', help='not used for the moment')
+    parser.add_argument('wikidata_dir', help='the directory of wikipedia dumps that you have downloaded')
     args = parser.parse_args()
+
+    taxonomy_infile = os.path.join(args.wikidata_dir, 'taxonomy_lemmatized.pkl')
+    vector_model_infile = os.path.join(args.wikidata_dir, 'topic_embeddings.model')
+    msfos_infile = '' # ignored for the moment
+    acm_ccs_infile = '' # ignored for the moment
 
     global taxonomy
     global w2v_model
     global msfos_data
     global acm_ccs_data
-    taxonomy = load_pkl_file(args.taxonomy_infile)
-    w2v_model = load_vector_model(args.vector_model_infile)
-    msfos_data = load_pkl_file(args.msfos_infile)
-    acm_ccs_data = load_pkl_file(args.acm_ccs_infile)
+    taxonomy = load_pkl_file(taxonomy_infile)
+    w2v_model = load_vector_model(vector_model_infile)
+    msfos_data = load_pkl_file(msfos_infile)
+    acm_ccs_data = load_pkl_file(acm_ccs_infile)
 
     app.run(host='0.0.0.0', port=15400, threaded=True)
     # app.run(host='127.0.0.1', port=15401, threaded=True)

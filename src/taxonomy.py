@@ -108,27 +108,20 @@ def parse_k_lines_for_category(lines, outfile, line_no):
 def main():
     timestamp = '20170901' # CHANGE THIS AS NEEDED
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pages_infile', default='./wikidata/enwiki-{}-pages.sql'.format(timestamp))
-    parser.add_argument('--pages_outfile', default='./wikidata/enwiki-{}-pages-outfile'.format(timestamp))
-    parser.add_argument('--categorylinks_infile', default='./wikidata/enwiki-{}-categorylinks.sql'.format(timestamp))
-    parser.add_argument('--categorylinks_outfile', default='./wikidata/enwiki-{}-categorylinks-outfile'.format(timestamp))
-    parser.add_argument('--category_infile', default='./wikidata/enwiki-{0}-category.sql'.format(timestamp))
-    parser.add_argument('--category_outfile', default='./wikidata/enwiki-{0}-category-outfile'.format(timestamp))
-    parser.add_argument('--page_and_category_outfile', default='./wikidata/enwiki-{0}-page-and-category-outfile'.format(timestamp))
-    parser.add_argument('--taxonomy_outfile', default='./wikidata/taxonomy.pkl')
-    parser.add_argument('--taxonomy_lemmatized_outfile', default='./wikidata/taxonomy_lemmatized.pkl')
+    parser.add_argument('timestamp', help='the timestamp of wikipedia dumps that you have downloaded')
+    parser.add_argument('wikidata_dir', help='the directory of wikipedia dumps that you have downloaded')
     args = parser.parse_args()
 
-    pages_infile = args.pages_infile
-    pages_outfile = args.pages_outfile
-    categorylinks_infile = args.categorylinks_infile
-    categorylinks_outfile = args.categorylinks_outfile
-    category_infile = args.category_infile
-    category_outfile = args.category_outfile
-    page_and_category_outfile = args.page_and_category_outfile
-    taxonomy_outfile = args.taxonomy_outfile
-    taxonomy_lowercase_outfile = args.taxonomy_lowercase_outfile
-
+    timestamp = args.timestamp
+    pages_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-pages.sql'.format(timestamp))
+    pages_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-pages-outfile'.format(timestamp))
+    categorylinks_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-categorylinks.sql'.format(timestamp))
+    categorylinks_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-categorylinks-outfile'.format(timestamp))
+    category_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-category.sql'.format(timestamp))
+    category_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-category-outfile'.format(timestamp))
+    page_and_category_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-page-and-category-outfile'.format(timestamp))
+    taxonomy_outfile = os.path.join(args.wikidata_dir, 'taxonomy.pkl')
+    taxonomy_lemmatized_outfile = os.path.join(args.wikidata_dir, 'taxonomy_lemmatized.pkl')
 
     # pages
     if 1:

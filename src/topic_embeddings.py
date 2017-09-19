@@ -409,47 +409,50 @@ def concatenate_files(filenames, outfile):
                     fout.write(line)
 
 def main():
-    timestamp = '20170901' # the timestamp of wikidump data that you downloaded; ***CHANGE THIS AS NEEDED***
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--document_dir', default='./wikidata/wikidump/', help='the directory of preprocessed (by WikiExtractor) wikidump data')
-    parser.add_argument('--document_cleaned_dir', default='./wikidata/wikidump_cleaned/')
-    parser.add_argument('--category_file', default='./wikidata/enwiki-{}-category.sql'.format(timestamp), help='wiki category file downloaded using wiki_downloader.py')
-    parser.add_argument('--category_titles_file', default='./wikidata/enwiki-{}-category-titles'.format(timestamp))
-    parser.add_argument('--page_titles_file', default='./wikidata/enwiki-{}-all-titles-in-ns0'.format(timestamp))
-    parser.add_argument('--raw_topics', default='./wikidata/enwiki-{}-pages-categories-titles'.format(timestamp))
-    parser.add_argument('--alphanumeric_topics', default='./wikidata/enwiki-{}-pages-categories-titles-alphanumeric'.format(timestamp), help='this output file will contain all candidate topics (in the form of phrases)')
-    parser.add_argument('--new_sentences_dir', default='./wikidata/wikidump_title_sentences/')
-    parser.add_argument('--model_path', default='./wikidata/wiki_embeddings.model')
-
+    # timestamp = '20170901' # the timestamp of wikidump data that you downloaded
+    parser.add_argument('timestamp', help='the timestamp of wikipedia dumps that you have downloaded')
+    parser.add_argument('wikidata_dir', help='the directory of wikipedia dumps that you have downloaded')
     args = parser.parse_args()
+
+    timestamp = args.timestamp
+    document_dir = os.path.join(args.wikidata_dir, 'preprocessed')
+    document_cleaned_dir = os.path.join(args.wikidata_dir, 'preprocessed2')
+    category_file = os.path.join(args.wikidata_dir, 'enwiki-{}-category.sql'.format(timestamp))
+    category_titles_file = os.path.join(args.wikidata_dir, 'enwiki-{}-category-titles'.format(timestamp))
+    page_titles_file = os.path.join(args.wikidata_dir, 'enwiki-{}-all-titles-in-ns0'.format(timestamp))
+    raw_topics = os.path.join(args.wikidata_dir, 'enwiki-{}-pages-categories-titles'.format(timestamp))
+    alphanumeric_topics = os.path.join(args.wikidata_dir, 'enwiki-{}-pages-categories-titles-alphanumeric'.format(timestamp))
+    new_sentences_dir = os.path.join(args.wikidata_dir, 'new_sentences')
+    model_path = os.path.join(args.wikidata_dir, 'topic_embeddings.model')
 
     # step 1
     if 1: # process raw text wiki files
-        multiprocess_dir(args.document_dir, args.document_cleaned_dir, clean_raw_text_file)
+        multiprocess_dir(document_dir, document_cleaned_dir, clean_raw_text_file)
 
     # step 2
     if 1: # extract all category titles
         logger.info('category_file...')
-        extract_wiki_categories(args.category_file, args.category_titles_file)
+        extract_wiki_categories(category_file, category_titles_file)
 
     # step 3
     if 1: # concatenate two files of page titles and category titles
-        concatenate_files([args.category_titles_file, args.page_titles_file], args.raw_topics)
+        concatenate_files([category_titles_file, page_titles_file], raw_topics)
 
     # step 4
     if 1: # process wiki titles
         chunksize = 1000
         logger.info('lower_and_remove_non_alphanumeric_wiki_title...')
-        multiprocess_file(args.raw_topics, args.alphanumeric_topics, lower_and_remove_non_alphanumeric_wiki_title, chunksize, skip_head_line=False)
+        multiprocess_file(raw_topics, alphanumeric_topics, lower_and_remove_non_alphanumeric_wiki_title, chunksize, skip_head_line=False)
         logger.info('DONE.')
 
     # step 5
     if 1: # generate sentences of given phrases
-        generate_sentences_of_given_phrases_at_dir_level(args.wiki_document_cleaned_dir, args.new_sentences_dir, args.alphanumeric_topics)
+        generate_sentences_of_given_phrases_at_dir_level(wiki_document_cleaned_dir, new_sentences_dir, alphanumeric_topics)
     
     # step 6
     if 1: # train_word2vec_on_wiki_text
-        train_word2vec_on_text(args.new_sentences_dir, args.model_path)
+        train_word2vec_on_text(new_sentences_dir, model_path)
 
 # def main():
 #     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
