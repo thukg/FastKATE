@@ -112,11 +112,11 @@ def main():
     parser.add_argument('--pages_outfile', default='./wikidata/enwiki-{}-pages-outfile'.format(timestamp))
     parser.add_argument('--categorylinks_infile', default='./wikidata/enwiki-{}-categorylinks.sql'.format(timestamp))
     parser.add_argument('--categorylinks_outfile', default='./wikidata/enwiki-{}-categorylinks-outfile'.format(timestamp))
-    parser.add_argument('category_infile', default='./wikidata/enwiki-{0}-category.sql'.format(timestamp))
-    parser.add_argument('category_outfile', default='./wikidata/enwiki-{0}-category-outfile'.format(timestamp))
-    parser.add_argument('page_and_category_outfile', default='./wikidata/enwiki-{0}-page-and-category-outfile'.format(timestamp))
-    parser.add_argument('taxonomy_outfile', default='./wikidata/taxonomy.pkl')
-    parser.add_argument('taxonomy_lemmatized_outfile', default='./wikidata/taxonomy_lemmatized.pkl')
+    parser.add_argument('--category_infile', default='./wikidata/enwiki-{0}-category.sql'.format(timestamp))
+    parser.add_argument('--category_outfile', default='./wikidata/enwiki-{0}-category-outfile'.format(timestamp))
+    parser.add_argument('--page_and_category_outfile', default='./wikidata/enwiki-{0}-page-and-category-outfile'.format(timestamp))
+    parser.add_argument('--taxonomy_outfile', default='./wikidata/taxonomy.pkl')
+    parser.add_argument('--taxonomy_lemmatized_outfile', default='./wikidata/taxonomy_lemmatized.pkl')
     args = parser.parse_args()
 
     pages_infile = args.pages_infile

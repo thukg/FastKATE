@@ -40,34 +40,42 @@ optional arguments:
 
 - Run `python3 -m FastKATE.src.topic_embeddings` to extract candidate topics (in the form of phrases) from wikidump data and generate vector representations of each topic. (If you haven't changed any default parameter settings up to now, you don't need to change the default parameter settings here either.)
 ~~~~
-usage: topic_embeddings.py [-h] [--wiki_document_dir WIKI_DOCUMENT_DIR]
-                           [--wiki_document_cleaned_dir WIKI_DOCUMENT_CLEANED_DIR]
+usage: topic_embeddings.py [-h] [--document_dir DOCUMENT_DIR]
+                           [--document_cleaned_dir DOCUMENT_CLEANED_DIR]
                            [--category_file CATEGORY_FILE]
                            [--category_titles_file CATEGORY_TITLES_FILE]
                            [--page_titles_file PAGE_TITLES_FILE]
-                           [--wiki_titles_raw WIKI_TITLES_RAW]
-                           [--wiki_titles_alphanumeric WIKI_TITLES_ALPHANUMERIC]
-                           [--wiki_sentences_dir WIKI_SENTENCES_DIR]
-                           [--wiki_text_model_path WIKI_TEXT_MODEL_PATH]
+                           [--raw_topics RAW_TOPICS]
+                           [--alphanumeric_topics ALPHANUMERIC_TOPICS]
+                           [--new_sentences_dir NEW_SENTENCES_DIR]
+                           [--model_path MODEL_PATH]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --wiki_document_dir WIKI_DOCUMENT_DIR
+  --document_dir DOCUMENT_DIR
                         the directory of preprocessed (by WikiExtractor)
                         wikidump data (default: ./wikidata/wikidump/)
-  --wiki_document_cleaned_dir WIKI_DOCUMENT_CLEANED_DIR
+  --document_cleaned_dir DOCUMENT_CLEANED_DIR
   --category_file CATEGORY_FILE
                         wiki category file downloaded using wiki_downloader.py
                         (default: ./wikidata/enwiki-20170901-category.sql)
   --category_titles_file CATEGORY_TITLES_FILE
   --page_titles_file PAGE_TITLES_FILE
-  --wiki_titles_raw WIKI_TITLES_RAW
-  --wiki_titles_alphanumeric WIKI_TITLES_ALPHANUMERIC
-  --wiki_sentences_dir WIKI_SENTENCES_DIR
-  --wiki_text_model_path WIKI_TEXT_MODEL_PATH
+  --raw_topics RAW_TOPICS
+  --alphanumeric_topics ALPHANUMERIC_TOPICS
+                        this output file will contain all candidate topics (in
+                        the form of phrases) (default:
+                        ./wikidata/enwiki-20170901-pages-categories-titles-
+                        alphanumeric)
+  --new_sentences_dir NEW_SENTENCES_DIR
+  --model_path MODEL_PATH
 ~~~~
 
 - A pretrained topic embeddings model (which is trained using the wikidump of timestamp 20161201 and used in our paper) can be downloaded [here](https://mega.nz/#F!YNJTUCyb!TXy7Ju7c6kyPg5Q50zDzhQ) (including 3 files; you should download all 3 files and put them in the same folder if you want to use the pretrained model).
+
+- In fact, you can use the our code to train topic embeddings on different datasets other than wikipedia used here. If you want to do this, you only need to ensure that:
+    - `document_dir` can contain arbitrary deep directories; each line of any descendant file under this directory should be a paragraph of normal text (can contain punctuations).
+    - You can provide the file of `raw_topics` directly and comment the code of step 2~3 in the `main()` function of `topic_embeddings.py`. Each line of the file of `raw_topics` should be a candidate topic (phrase) where spaces should be replaced by `_`.
 
 ### Extract Category Structure from Wikipedia
 
@@ -79,15 +87,11 @@ usage: taxonomy.py [-h] [--pages_infile PAGES_INFILE]
                    [--pages_outfile PAGES_OUTFILE]
                    [--categorylinks_infile CATEGORYLINKS_INFILE]
                    [--categorylinks_outfile CATEGORYLINKS_OUTFILE]
-                   category_infile category_outfile page_and_category_outfile
-                   taxonomy_outfile taxonomy_lemmatized_outfile
-
-positional arguments:
-  category_infile
-  category_outfile
-  page_and_category_outfile
-  taxonomy_outfile
-  taxonomy_lemmatized_outfile
+                   [--category_infile CATEGORY_INFILE]
+                   [--category_outfile CATEGORY_OUTFILE]
+                   [--page_and_category_outfile PAGE_AND_CATEGORY_OUTFILE]
+                   [--taxonomy_outfile TAXONOMY_OUTFILE]
+                   [--taxonomy_lemmatized_outfile TAXONOMY_LEMMATIZED_OUTFILE]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -95,6 +99,11 @@ optional arguments:
   --pages_outfile PAGES_OUTFILE
   --categorylinks_infile CATEGORYLINKS_INFILE
   --categorylinks_outfile CATEGORYLINKS_OUTFILE
+  --category_infile CATEGORY_INFILE
+  --category_outfile CATEGORY_OUTFILE
+  --page_and_category_outfile PAGE_AND_CATEGORY_OUTFILE
+  --taxonomy_outfile TAXONOMY_OUTFILE
+  --taxonomy_lemmatized_outfile TAXONOMY_LEMMATIZED_OUTFILE
 ~~~~
 
 - A file containing extracted category structure can be downloaded [here](https://mega.nz/#F!kJITxQBL!XgsqoetqEazkm4W3tP_YXQ) (which is used in our paper).

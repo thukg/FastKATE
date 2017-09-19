@@ -411,38 +411,45 @@ def concatenate_files(filenames, outfile):
 def main():
     timestamp = '20170901' # the timestamp of wikidump data that you downloaded; ***CHANGE THIS AS NEEDED***
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--wiki_document_dir', default='./wikidata/wikidump/', help='the directory of preprocessed (by WikiExtractor) wikidump data')
-    parser.add_argument('--wiki_document_cleaned_dir', default='./wikidata/wikidump_cleaned/')
+    parser.add_argument('--document_dir', default='./wikidata/wikidump/', help='the directory of preprocessed (by WikiExtractor) wikidump data')
+    parser.add_argument('--document_cleaned_dir', default='./wikidata/wikidump_cleaned/')
     parser.add_argument('--category_file', default='./wikidata/enwiki-{}-category.sql'.format(timestamp), help='wiki category file downloaded using wiki_downloader.py')
     parser.add_argument('--category_titles_file', default='./wikidata/enwiki-{}-category-titles'.format(timestamp))
     parser.add_argument('--page_titles_file', default='./wikidata/enwiki-{}-all-titles-in-ns0'.format(timestamp))
-    parser.add_argument('--wiki_titles_raw', default='./wikidata/enwiki-{}-pages-categories-titles'.format(timestamp))
-    parser.add_argument('--wiki_titles_alphanumeric', default='./wikidata/enwiki-{}-pages-categories-titles-alphanumeric'.format(timestamp), help='this output file will contain all candidate topics (in the form of phrases)')
-    parser.add_argument('--wiki_sentences_dir', default='./wikidata/wikidump_title_sentences/')
-    parser.add_argument('--wiki_text_model_path', default='./wikidata/wiki_embeddings.model')
+    parser.add_argument('--raw_topics', default='./wikidata/enwiki-{}-pages-categories-titles'.format(timestamp))
+    parser.add_argument('--alphanumeric_topics', default='./wikidata/enwiki-{}-pages-categories-titles-alphanumeric'.format(timestamp), help='this output file will contain all candidate topics (in the form of phrases)')
+    parser.add_argument('--new_sentences_dir', default='./wikidata/wikidump_title_sentences/')
+    parser.add_argument('--model_path', default='./wikidata/wiki_embeddings.model')
 
     args = parser.parse_args()
 
-    # Wikipedia text
+    # step 1
     if 1: # process raw text wiki files
-        multiprocess_dir(wiki_document_dir, wiki_document_cleaned_dir, clean_raw_text_file)
+        multiprocess_dir(args.document_dir, args.document_cleaned_dir, clean_raw_text_file)
 
+    # step 2
     if 1: # extract all category titles
         logger.info('category_file...')
-        extract_wiki_categories(category_file, category_titles_file)
+        extract_wiki_categories(args.category_file, args.category_titles_file)
 
+    # step 3
     if 1: # concatenate two files of page titles and category titles
-        concatenate_files([args.category_titles_file, args.page_titles_file], args.wiki_titles_raw)
+        concatenate_files([args.category_titles_file, args.page_titles_file], args.raw_topics)
 
+    # step 4
     if 1: # process wiki titles
         chunksize = 1000
         logger.info('lower_and_remove_non_alphanumeric_wiki_title...')
-        multiprocess_file(wiki_titles_raw, wiki_titles_alphanumeric, lower_and_remove_non_alphanumeric_wiki_title, chunksize, skip_head_line=False)
+        multiprocess_file(args.raw_topics, args.alphanumeric_topics, lower_and_remove_non_alphanumeric_wiki_title, chunksize, skip_head_line=False)
         logger.info('DONE.')
+
+    # step 5
     if 1: # generate sentences of given phrases
-        generate_sentences_of_given_phrases_at_dir_level(wiki_document_cleaned_dir, wiki_sentences_dir, wiki_titles_alphanumeric)
+        generate_sentences_of_given_phrases_at_dir_level(args.wiki_document_cleaned_dir, args.new_sentences_dir, args.alphanumeric_topics)
+    
+    # step 6
     if 1: # train_word2vec_on_wiki_text
-        train_word2vec_on_text(wiki_sentences_dir, wiki_text_model_path)
+        train_word2vec_on_text(args.new_sentences_dir, args.model_path)
 
 # def main():
 #     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
