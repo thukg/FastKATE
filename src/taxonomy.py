@@ -297,7 +297,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('timestamp', help='the timestamp of wikipedia dumps that you have downloaded')
     parser.add_argument('wikidata_dir', help='the directory of wikipedia dumps that you have downloaded')
-    parser.add_argument('job', help='pages_basic_info/categorylinks/pages_taxonomy')
+    parser.add_argument('--job', default='pages_taxonomy', help='pages_basic_info/categorylinks/pages_taxonomy')
     args = parser.parse_args()
 
     timestamp = args.timestamp
