@@ -13,8 +13,8 @@ import regex as re
 import string
 re.DEFAULT_VERSION = re.VERSION1
 
-from wikidump_parser.utils.logger import simple_logger
-logger = simple_logger(__name__, 'wikidump_parser/log')
+from FastKATE.utils.logger import simple_logger
+logger = simple_logger(__name__, 'FastKATE/log')
 
 from nltk.stem import WordNetLemmatizer
 lemmatize = WordNetLemmatizer().lemmatize
