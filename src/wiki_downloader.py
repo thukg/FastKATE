@@ -36,7 +36,7 @@ def main():
     all_titles = "{0}/enwiki-{0}-all-titles-in-ns0.gz".format(time_stamp)
     pages_articles = "{0}/enwiki-{0}-pages-articles.xml.bz2".format(time_stamp)
     pages_articles_multistream = "{0}/enwiki-{0}-pages-articles-multistream.xml.bz2".format(time_stamp)
-    pages = "{0}/enwiki-{0}-pages.sql.gz".format(time_stamp)
+    pages = "{0}/enwiki-{0}-page.sql.gz".format(time_stamp)
     categorylinks = "{0}/enwiki-{0}-categorylinks.sql.gz".format(time_stamp)
     category = "{0}/enwiki-{0}-category.sql.gz".format(time_stamp)
 
