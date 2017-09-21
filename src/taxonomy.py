@@ -301,13 +301,13 @@ def main():
     args = parser.parse_args()
 
     timestamp = args.timestamp
-    pages_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-pages.sql'.format(timestamp))
-    pages_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-pages-outfile'.format(timestamp))
+    pages_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-page.sql'.format(timestamp))
+    pages_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-page-outfile'.format(timestamp))
     categorylinks_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-categorylinks.sql'.format(timestamp))
     categorylinks_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-categorylinks-outfile'.format(timestamp))
     category_infile = os.path.join(args.wikidata_dir, 'enwiki-{}-category.sql'.format(timestamp))
     category_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-category-outfile'.format(timestamp))
-    all_pages_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-page-and-category-outfile'.format(timestamp))
+    all_pages_outfile = os.path.join(args.wikidata_dir, 'enwiki-{}-all-pages-outfile'.format(timestamp))
     taxonomy_lemmatized_outfile = os.path.join(args.wikidata_dir, 'taxonomy_lemmatized.pkl')
 
     if args.job == 'pages_basic_info':
