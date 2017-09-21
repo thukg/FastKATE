@@ -92,7 +92,7 @@ def extract_page_basic_info(pages_infile, pages_outfile):
     for w in workers:
         w.start()
 
-    tmp_dir = '/tmp/wikipage/'
+    tmp_dir = '/tmp/wiki_pages/'
     if os.path.isdir(tmp_dir):
         shutil.rmtree(tmp_dir)
     os.makedirs(tmp_dir, exist_ok=True)
@@ -219,7 +219,7 @@ def extract_category_basic_info(category_infile, category_outfile):
     for w in workers:
         w.start()
 
-    tmp_dir = '/tmp/thuzhf/taxonomy/'
+    tmp_dir = '/tmp/wiki_category/'
     if os.path.isdir(tmp_dir):
         shutil.rmtree(tmp_dir)
     os.makedirs(tmp_dir, exist_ok=True)
