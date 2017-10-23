@@ -45,7 +45,7 @@ Since our model utilizes Wikipedia dumps, thus we need to download these data fi
 
 1. Run `cd <PARENT>` to enter into the parent directory of FastKATE.
 
-2. Run `python3 -m FastKATE.src.api ./wikidata/` to run the extraction algorithm and set up the API. For quick help, run: `python3 -m FastKATE.src.api -h`. A currently running API can be visited [here](http://166.111.7.105:15400/topics?area=artificial_intelligence&k=15).
+2. Run `python3 -m FastKATE.src.api ./wikidata/` to run the extraction algorithm and set up the API. For quick help, run: `python3 -m FastKATE.src.api -h`. A currently running API can be visited [here](http://166.111.7.105:15400/topics?area=artificial_intelligence&k=15) (slightly different from the original paper now because we have integrated MAG and ACM CCS data to further improve original results).
     - The inputs of the API are:
         - area: area name; should be lowercase; spaces should be replaced by `_`.
         - k: the number of topics needed to be extracted; should be a positive integer.
