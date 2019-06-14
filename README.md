@@ -1,6 +1,6 @@
 # **Fast** top-**K** **A**rea **T**opics **E**xtraction (FastKATE)
 
-This repository contains the source code, data and API used in our recent paper: Fast Top-*k* Area Topics Extraction (paper link will be available soon).
+This repository contains the source code, data and API used in our recent paper: Fast Top-*k* Area Topics Extraction.
 
 ### Prerequisites
 The following dependencies are required and must be installed separately:
